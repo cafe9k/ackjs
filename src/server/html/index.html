@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Cafe工具集</title>
+    <meta name="description" content="牛马工具集">
+    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+    <link rel="stylesheet" href="/Public/css/main.css" />
+    <link rel="shortcut icon" href="/Public/img/favicon.ico" type="image/x-icon" />
+    <style>
+        .main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            color: #212529;
+            margin-bottom: 20px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #6c757d;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .tool-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .tool-card h3 {
+            color: #0d6efd;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+
+        .tool-card p {
+            color: #6c757d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .tool-card a {
+            display: inline-block;
+            padding: 10px 25px;
+            background: #0d6efd;
+            color: white;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .tool-card a:hover {
+            background: #0b5ed7;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Cafe工具集</h1>
+    </div>
+
+    <div class="main">
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>MangoFix代码转换器</h3>
+                <p>快速将Objective-C代码转换为Mango热修复代码的在线工具</p>
+                <a href="/converter">立即使用</a>
+            </div>
+            <div class="tool-card">
+                <h3>Next Tool</h3>
+                <p>Next Tool Coming Soon</p>
+                <a href="/">立即使用</a>
+            </div>
+            <!-- 未来可以在这里添加更多工具卡片 -->
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 20px; background-color: #f8f9fa; margin-top: 50px; color: #6c757d; border-top: 1px solid #dee2e6;">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <p style="margin-bottom: 10px;">© 2024 Cafe工具集. All rights reserved.</p>
+            <p style="font-size: 14px;">
+                <a href="mailto:qingqing.zhang@trip.com">邮件联系我们</a> |
+                <a href="#" style="color: #6c757d; text-decoration: none; margin: 0 10px;">关于我们</a> |
+                <a href="#" style="color: #6c757d; text-decoration: none; margin: 0 10px;">使用条款</a> |
+                <a href="#" style="color: #6c757d; text-decoration: none; margin: 0 10px;">隐私政策</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="/Public/js/jquery-1.11.3.min.js"></script>
+</body>
+</html>

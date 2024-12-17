@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>MangoFix代码转换器</title>
+    <meta name="description" content="MangoFix代码转换器 - 一个快速将Objective-C代码转换为Mango热修复代码的在线工具。">
+    <meta name="keywords" content="热更新,热补丁,热修复,hotfix,动态更新">
+    <link rel="stylesheet" href="/Public/css/bootstrap.min.css?v=1.2" />
+    <link rel="stylesheet" href="/Public/css/main.css" />
+    <link rel="shortcut icon" href="/Public/img/favicon.ico" type="image/x-icon" />
+    <style>
+        .nav-back {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #0d6efd;
+        }
+
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #212529;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: #6c757d;
+            max-width: 600px;
+            margin: 0 auto 8px;
+        }
+
+        .textarea-ctn {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .item h2 {
+            font-size: 18px;
+            color: #495057;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .item textarea {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+            font-family: 'Monaco', 'Menlo', monospace;
+            resize: vertical;
+        }
+
+        #convertBtn {
+            background: #0d6efd;
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        #convertBtn:hover {
+            background: #0b5ed7;
+            transform: translateY(-1px);
+        }
+
+        .action {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .textarea-tips {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            right: 20px;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .error-tips {
+            background: #f8d7da;
+            color: #842029;
+        }
+
+        .warning-tips {
+            background: #fff3cd;
+            color: #664d03;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: rgba(0,0,0,0.1);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 20px;
+            color: inherit;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .loading img {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-back">
+        <a href="/" class="back-link">← 返回首页</a>
+    </div>
+
+    <div class="header">
+        <h1>MangoFix代码转换器</h1>
+        <p>快速将Objective-C代码转换为<a href="https://github.com/YPLiang19/Mango">Mango</a>的在线工具</p>
+    </div>
+
+    <div class="main">
+        <div class="textarea-ctn">
+            <div class="item" id="objcItem">
+                <h2>Objective-C 代码</h2>
+                <textarea id="objcTextarea" wrap="off"></textarea>
+                <div class="textarea-tips error-tips" id="ocErrorTips">
+                    <div class="ctn"></div>
+                    <a href="javascript:void(0);" class="close-btn">×</a>
+                </div>
+                <div class="textarea-tips warning-tips" id="ocWarningTips">
+                    <div class="ctn"></div>
+                    <a href="javascript:void(0);" class="close-btn">×</a>
+                </div>
+            </div>
+            <div class="item" id="jsItem">
+                <h2>Mango 代码</h2>
+                <textarea id="jsTextarea" wrap="off"></textarea>
+                <div class="textarea-tips error-tips" id="jsErrorTips">
+                    <div class="ctn"></div>
+                    <a href="javascript:void(0);" class="close-btn">×</a>
+                </div>
+                <div class="textarea-tips warning-tips" id="jsWarningTips">
+                    <div class="ctn"></div>
+                    <a href="javascript:void(0);" class="close-btn">×</a>
+                </div>
+            </div>
+        </div>
+        <div class="loading">
+            <img src="/Public/img/loading.gif" alt="加载中..." />
+        </div>
+        <div class="action">
+            <a href="javascript:void(0)" id="convertBtn">转换</a>
+        </div>
+    </div>
+
+    <script src="/Public/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript">
+        var sampleScript = [
+            '@implementation SampleClass',
+            '- (void)requestUrl:(NSString *)url param:(NSDictionary *)dict callback:(JPCallback)callback {',
+            '    [super requestUrl:url param:dict callback:callback];',
+            '    JPRequest *obj = [[JPRequest alloc] initWithUrl:url param:dict];',
+            '    obj.successBlock = ^(id data, NSError *err) {',
+            '        NSString *content = [JPParser parseData:data];',
+            '        [self.dataSource refresh];',
+            '        self.handleRequestSuccess(@{',
+            '            @"content": content',
+            '        });',
+            '    };',
+            '}',
+            '@end',
+        ].join('\n');
+        $('#objcTextarea').val(sampleScript);
+
+        $('#convertBtn').click(function () {
+            var code = $('#objcTextarea').val();
+            if (code.split('\n').length > 1000) {
+                $('#ocErrorTips').show();
+                $('#ocErrorTips .ctn').html('<p>超过限制，转换内容支持1000行以下。</p>')
+                return;
+            }
+            $('.loading img').show();
+
+            $.post("/convertCode", { code: code }, function (data) {
+                $('#ocErrorTips').hide();
+                $('#ocWarningTips').hide();
+                $('#jsErrorTips').hide();
+                $('#jsWarningTips').hide();
+                $('.loading img').hide();
+
+                var code = data['code'];
+                $('#jsTextarea').val(code);
+
+                if (data['errors'].length) {
+                    var errCtn = '';
+                    for (var i = 0; i < data['errors'].length; i++) {
+                        errCtn += '<p>' + data['errors'][i] + '</p>';
+                    }
+                    $('#ocErrorTips .ctn').html(errCtn)
+                    $('#ocErrorTips').show();
+                    $('#ocWarningTips').hide();
+                }
+
+                if (!$('#jsErrorTips').is(":visible") && data['warnings'] && data['warnings'].length) {
+                    var warningCtn = '';
+                    var space = '';
+                    for (var i = 0; i < data['warnings'].length; i++) {
+                        warningCtn += '<p>' + data['warnings'][i] + '</p>';
+                        space += '\n\n\n'
+                    }
+                    $('#jsWarningTips .ctn').html(warningCtn)
+                    $('#jsWarningTips').show();
+                    $('#jsTextarea').val(code + space);
+                }
+            });
+        });
+
+        $('.close-btn').click(function () {
+            $(this).parent().hide();
+        });
+    </script>
+</body>
+</html> 

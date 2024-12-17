@@ -4,6 +4,10 @@ const OCASTWalker = require('../ast/OCASTWalker')
 
 const app = EXPRESS()
 const PORT = process.env.PORT || 3000;  
+const cors = require('cors');
+
+// 使用cors中间件
+app.use(cors());
 
 app.use(EXPRESS.json())
 
@@ -19,7 +23,7 @@ app.get('/converter', (req, res) => {
     res.sendFile(PATH.join(__dirname, 'html', 'converter.html'))
 })
 
-// API路由，转换OC代码为Mango热修代码
+// API路由，转换OC代码为代码
 app.use('/convertCode', EXPRESS.urlencoded({ extended: false }), (req, res) => {
     const { code } = req.body
     let walker = new OCASTWalker()
